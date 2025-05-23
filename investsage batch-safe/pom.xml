@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Spring Boot Parent -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.4</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <!-- Your Project Coordinates -->
+    <groupId>com.dharmil</groupId>
+    <artifactId>investsage</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>investsage</name>
+    <description>Backend for InvestSage AI Chatbot</description>
+
+    <!-- Properties -->
+    <properties>
+        <java.version>17</java.version>
+        <spring-ai.version>1.0.0-M6</spring-ai.version>
+        <!-- Use latest pgvector version (Check Maven Central for the very latest if needed) -->
+        <pgvector.version>0.2.0</pgvector.version>
+
+        <postgresql.version>42.6.0</postgresql.version>
+    </properties>
+
+    <!-- Dependency Management (Importing BOMs) -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring AI Bill of Materials -->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- import Akka BOM for consistent versions -->
+            <dependency>
+                <groupId>com.typesafe.akka</groupId>
+                <artifactId>akka-bom_2.13</artifactId>
+                <version>2.8.8</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- import Alpakka BOM if desired -->
+            <dependency>
+                <groupId>com.lightbend.akka</groupId>
+                <artifactId>akka-dependencies_2.13</artifactId>
+                <version>23.05.4</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Repositories for Milestones -->
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <releases>
+                <enabled>false</enabled>        <!-- Disable GA releases -->
+            </releases>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots><enabled>false</enabled></snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <!-- Dependencies -->
+    <dependencies>
+        <!-- Spring AI -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+            <!-- Version managed by spring-ai-bom -->
+        </dependency>
+
+        <!-- Spring Boot Starters -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Database -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <!-- Version managed by Spring Boot parent 3.4.4 (likely 42.7.x) -->
+        </dependency>
+        <dependency>
+            <groupId>com.pgvector</groupId>
+            <artifactId>pgvector</artifactId>
+            <version>0.1.4</version> <!-- Using property for 0.2.0 -->
+        </dependency>
+
+        <!-- Utilities -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <!-- Version managed by Spring Boot parent -->
+        </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.9</version> <!-- Keeping your specified version -->
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+            <!-- Version managed by Spring Boot parent -->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-infrastructure</artifactId>
+            <version>5.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-core</artifactId>
+            <version>5.2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-annotations-api</artifactId>
+            <version>10.1.39</version>
+        </dependency>
+
+    </dependencies>
+
+    <!-- Build Configuration -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- Version managed by Spring Boot parent -->
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

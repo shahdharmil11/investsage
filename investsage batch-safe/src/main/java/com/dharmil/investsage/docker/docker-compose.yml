@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgres-pgvector:
+    image: pgvector/pgvector:pg16 # Use PostgreSQL 16 with pgvector pre-installed
+    container_name: investsage-db
+    environment:
+      # Define PostgreSQL credentials - CHANGE THESE VALUES!
+      POSTGRES_DB: investsage_db         # Database name
+      POSTGRES_USER: investsage_user     # Database user
+      POSTGRES_PASSWORD: yoursecurepassword # CHANGE THIS PASSWORD
+    ports:
+      - "5433:5432" # Map local port 5432 to container port 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist data outside the container
+
+volumes:
+  postgres_data:
+    driver: local
